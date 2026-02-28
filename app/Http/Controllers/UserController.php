@@ -11,7 +11,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        return Inertia::render('User/Index');
+        $users = User::withCount('location')->where('is_admin', false)->get();
+        return Inertia::render('User/Index', compact('users'));
     }
 
 

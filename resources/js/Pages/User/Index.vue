@@ -6,6 +6,11 @@ import InputLabel from '@/Components/InputLabel.vue';
 import { ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 
+
+const props = defineProps({
+    users: Array
+});
+
 // mengatur modal open/close
 
 const showModal = ref(false);
@@ -66,20 +71,20 @@ const submit = () => {
                                 <tr
                                     class="text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black bg-slate-50/50 dark:bg-slate-800/50">
                                     <th class="px-8 py-5">Name & Email</th>
-                                    <th class="px-8 py-5">Total Rooms</th>
+                                    <th class="px-8 py-5">Total Location</th>
                                     <th class="px-8 py-5 text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                                <tr class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
+                                <tr v-for="user in users" :key="user.id" class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-6">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">asep</div>
+                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{user.name}}</div>
                                         <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            asep@test.com</div>
+                                            {{user.email}}</div>
                                     </td>
                                     <td class="px-8 py-6">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            10 rooms
+                                            {{ user.location_count }} Location
                                         </span>
                                     </td>
                                     <td class="px-8 py-6 text-right">
