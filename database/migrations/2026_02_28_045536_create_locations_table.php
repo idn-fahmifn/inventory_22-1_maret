@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
+            $table->foreignId('user_id')->nullable()
+            ->constrained('users')->nullOnDelete()
+            ->cascadeOnUpdate();
             $table->string('location_name');
             $table->enum('size', ['small', 'medium', 'large'])->default('small');
             $table->boolean('is_available')->default(true);

@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique(); 
+             $table->foreignId('location_id')->nullable()
+            ->constrained('locations')->nullOnDelete()
+            ->cascadeOnUpdate();
             $table->string('item_name');
             $table->enum('category', ['tools', 'electronic', 'transportation', 'etc']);
             $table->enum('condition', ['good', 'broke', 'maintenance']);
