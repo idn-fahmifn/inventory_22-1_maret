@@ -76,11 +76,13 @@ const submit = () => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                                <tr v-for="user in users" :key="user.id" class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
+                                <tr v-for="user in users" :key="user.id"
+                                    class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-6">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{user.name}}</div>
+                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ user.name }}
+                                        </div>
                                         <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{user.email}}</div>
+                                            {{ user.email }}</div>
                                     </td>
                                     <td class="px-8 py-6">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
@@ -96,6 +98,9 @@ const submit = () => {
                                             </svg>
                                         </a>
                                     </td>
+                                </tr>
+                                <tr v-if="users.length === 0">
+                                    <td colspan="3" class="px-8 py-3 text-center">User not found</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -146,7 +151,7 @@ const submit = () => {
 
                         <button type="submit" :disabled="form.processing"
                             class="bg-blue-600 px-6 py-2 rounded-lg text-sm text-slate-200 hover:bg-slate-50 dark:hover:bg-blue-800 transition">
-                            {{ form.processing ? 'saving data..' : 'save'  }}
+                            {{ form.processing ? 'saving data..' : 'save' }}
                         </button>
                     </div>
 
