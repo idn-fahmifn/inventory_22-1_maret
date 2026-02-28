@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -11,4 +13,24 @@ class UserController extends Controller
     {
         return Inertia::render('User/Index');
     }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:40'],
+            'email' => ['required', 'string','lowercase','email','max:255','unique:'.User::class,]
+        ]);
+
+        $save = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make('password'), //nilai password default
+        ];
+        User::create($save);
+
+        return redirect()->route('user.index')->with('success', 'User has been created');
+    }
+
+
 }

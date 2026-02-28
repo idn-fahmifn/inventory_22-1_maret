@@ -23,6 +23,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
 
     // CRUD untuk petugas : 
     Route::get('users', [UserController::class, 'index'])->name('user.index');
+    Route::post('users', [UserController::class, 'store'])->name('user.store');
 
 
 });
