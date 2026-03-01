@@ -151,8 +151,6 @@ const deleteItem = () => {
                                 <img v-if="item.image" :src="'/storage/images/items/' + item.image" alt="Image Item" class="img-fluid w-[320px]">
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -178,42 +176,61 @@ const deleteItem = () => {
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="">
-                            <InputLabel for="name" value="Location Name" class="text-slate-600 dark:text-slate-400" />
+                            <InputLabel for="name" value="Item Name" class="text-slate-600 dark:text-slate-400" />
                             <TextInput id="name" v-model="form.name" type="text"
                                 class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-lg" />
                             <div v-if="form.errors.name" class="text-rose-500">{{ form.errors.name }}</div>
                         </div>
                         <div class="">
-                            <InputLabel for="pic" value="Location's PIC" class="text-slate-600 dark:text-slate-400" />
-                            <select v-model="form.user" id="user"
+                            <InputLabel for="location" value="Location" class="text-slate-600 dark:text-slate-400" />
+                            <select v-model="form.location" id="user"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600">
-                                <option value="" disabled>choose user</option>
-                                <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</option>
+                                <option value="" disabled>choose location</option>
+                                <option v-for="location in locations" :key="location.id" :value="location.id">{{
+                                    location.location_name }}</option>
                             </select>
-                            <div v-if="form.errors.user" class="text-rose-500">{{ form.errors.user }}</div>
+                            <div v-if="form.errors.location" class="text-rose-500">{{ form.errors.location }}</div>
                         </div>
                     </div>
                     <div class="">
-                        <InputLabel for="size" value="size" class="text-slate-600 dark:text-slate-400" />
-                        <select v-model="form.size" id="size"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600">
-                            <option value="" disabled>choose size</option>
-                            <option value="small">small</option>
-                            <option value="medium">medium</option>
-                            <option value="large">large</option>
-                        </select>
-                        <div v-if="form.errors.size" class="text-rose-500">{{ form.errors.size }}</div>
+                        <InputLabel for="stock" value="Stok" class="text-slate-600 dark:text-slate-400" />
+                        <TextInput id="stock" v-model="form.stock" type="number"
+                            class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-lg" />
+                        <div v-if="form.errors.stock" class="text-rose-500">{{ form.errors.stock }}</div>
                     </div>
                     <div class="">
-                        <InputLabel for="availability" value="availability"
-                            class="text-slate-600 dark:text-slate-400" />
-                        <select v-model="form.availability" id="availability"
+                        <InputLabel for="category" value="category" class="text-slate-600 dark:text-slate-400" />
+                        <select v-model="form.category" id="category"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600">
-                            <option value="" disabled>choose availability</option>
-                            <option value="0">unvailable</option>
-                            <option value="1">available</option>
+                            <option value="" disabled>choose category</option>
+                            <option value="tools">tools</option>
+                            <option value="electronic">electronic</option>
+                            <option value="transportation">transportation</option>
+                            <option value="etc">etc</option>
                         </select>
-                        <div v-if="form.errors.availability" class="text-rose-500">{{ form.errors.availability }}</div>
+                        <div v-if="form.errors.category" class="text-rose-500">{{ form.errors.category }}</div>
+                    </div>
+                    <div class="">
+                        <InputLabel for="condition" value="condition" class="text-slate-600 dark:text-slate-400" />
+                        <select v-model="form.condition" id="condition"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600">
+                            <option value="" disabled>choose condition</option>
+                            <option value="good">good</option>
+                            <option value="broke">Broke</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                        <div v-if="form.errors.condition" class="text-rose-500">{{ form.errors.condition }}</div>
+                    </div>
+
+                    <div class="">
+                        <InputLabel for="image" value="Image" class="text-slate-600 dark:text-slate-400 " />
+                
+                        <input id="image" type="file"
+                            @input="form.image = $event.target.files[0]"
+                            class="py-6 px-3 mt-1 block w-full border border-dashed rounded-lg" >
+
+                        <div v-if="form.errors.image" class="text-rose-500">{{ form.errors.image }}</div>
+
                     </div>
 
                     <div class="">
@@ -222,6 +239,9 @@ const deleteItem = () => {
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-md" />
                         <div v-if="form.errors.description" class="text-rose-500">{{ form.errors.description }}</div>
                     </div>
+
+
+
 
                     <div class="mt-8 flex justify-end gap-3">
                         <!-- button cancel -->

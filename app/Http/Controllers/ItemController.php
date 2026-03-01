@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -47,13 +48,13 @@ class ItemController extends Controller
             $gambar = $request->file('image');
             $path = 'public/images/items';
             $ext = $gambar->getClientOriginalExtension();
-            $name = 'item_image_'.Carbon::now('Asia/Jakarta')->format('Ymdhis').'.'.$ext;
+            $name = 'item_image_' . Carbon::now('Asia/Jakarta')->format('Ymdhis') . '.' . $ext;
 
             $gambar->storeAs($path, $name);
 
             $simpan['image'] = $name;
 
-         }
+        }
 
 
         Item::create($simpan);
@@ -64,7 +65,7 @@ class ItemController extends Controller
     public function show($param)
     {
         $item = Item::where('uuid', $param)->firstOrFail()->load('location');
-        $locations = Location::all(); 
+        $locations = Location::all();
         return Inertia::render('Item/Show', [
             'locations' => $locations,
             'item' => $item,
@@ -73,27 +74,48 @@ class ItemController extends Controller
 
     public function update(Request $request, $param)
     {
-        $data = Location::where('uuid', $param)->firstOrFail();
+        $data = Item::where('uuid', $param)->firstOrFail();
+
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:30'],
-            'user' => ['required'],
-            'size' => ['required', 'in:small,medium,large'],
-            'availability' => ['required', 'in:1,0'],
+            'location' => ['required', 'exists:locations,id'],
+            'category' => ['required', 'in:electronic,tools,etc,transportation'],
+            'condition' => ['required', 'in:good,broke,maintenance'],
+            'stock' => ['required', 'min:0', 'max:999'],
+            'image' => ['required', 'mimes:png,jpg,jpeg,svg,webp'],
             'description' => ['required'],
         ]);
 
         $simpan = [
             'uuid' => Str::orderedUuid(),
-            'user_id' => $request->input('user'),
-            'location_name' => $request->input('name'),
-            'size' => $request->input('size'),
+            'location_id' => $request->input('location'),
+            'item_name' => $request->input('name'),
             'condition' => $request->input('condition'),
+            'category' => $request->input('category'),
             'stock' => $request->input('stock'),
             'description' => $request->input('description'),
         ];
 
+        if ($request->hasFile('image')) {
+
+            $path_lama = 'public/images/items/' . $data->image;
+
+            if($data->image && Storage::exists($path_lama)){
+                Storage::delete($path_lama);
+            }
+
+            $gambar = $request->file('image');
+            $path = 'public/images/items';
+            $ext = $gambar->getClientOriginalExtension();
+            $name = 'item_image_' . Carbon::now('Asia/Jakarta')->format('Ymdhis') . '.' . $ext;
+
+            $gambar->storeAs($path, $name);
+
+            $simpan['image'] = $name;
+        }
+
         $data->update($simpan);
-        return redirect()->route('location.show', $data->uuid)->with('success', 'Location Has been updated');
+        return redirect()->route('item.show', $data->uuid)->with('success', 'Item Has been updated');
     }
 
     public function destroy($param)
