@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
-        'uuid', 'location_id', 'item_name', 'condition', 'stok', 'image', 'description', 'category'
+        'uuid', 'location_id', 'item_name', 'condition', 'stock', 'image', 'description', 'category'
     ];
 
     // relasi ke model Location

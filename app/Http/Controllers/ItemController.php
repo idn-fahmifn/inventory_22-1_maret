@@ -49,14 +49,15 @@ class ItemController extends Controller
             $ext = $gambar->getClientOriginalExtension();
             $name = 'item_image_'.Carbon::now('Asia/Jakarta')->format('Ymdhis').'.'.$ext;
 
+            $gambar->storeAs($path, $name);
+
             $simpan['image'] = $name;
 
          }
 
-         return $simpan;
 
-        // Location::create($simpan);
-        // return redirect()->route('location.index')->with('success', 'Location Has been created');
+        Item::create($simpan);
+        return redirect()->route('item.index')->with('success', 'Item Has been created');
     }
 
 

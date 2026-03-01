@@ -94,7 +94,7 @@ const submit = () => {
                                     </td>
                                     <td class="px-8 py-0.5">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ location.stock }}
+                                            {{ item.stock }}
                                         </span>
                                     </td>
                                     <td class="px-8 py-0.5 text-right">
