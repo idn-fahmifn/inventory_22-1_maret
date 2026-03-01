@@ -18,7 +18,7 @@ const showModal = ref(false);
 
 const form = useForm({
     name: props.location.location_name,
-    user: props.location.user,
+    user: props.location.user_id,
     size: props.location.size,
     availability: props.location.is_available,
     description: props.location.description,
@@ -30,7 +30,8 @@ const openModal = () => {
     form.size = props.location.size;
     form.availability = props.location.is_available;
     form.description = props.location.description;
-    form.user = props.location.user.id;
+    form.user = props.location.user_id;
+    
     form.clearErrors();
     showModal.value = true;
 }
