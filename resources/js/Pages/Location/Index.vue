@@ -84,14 +84,14 @@ const submit = () => {
                                 <tr v-for="location in locations" :key="location.id"
                                     class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-0.5">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ location }}
+                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ location.location_name }}
                                         </div>
-                                        <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{ location }}</div>
+                                        <div v-if="location.is_available === 1" class="text-xs text-green-800 dark:text-green-600 font-bold mt-0.5 tracking-wider">available</div>
+                                        <div v-else class="text-xs text-red-800 dark:text-red-600 font-bold mt-0.5 tracking-wider">unvailable</div>
                                     </td>
                                     <td class="px-8 py-0.5">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ location }} Location
+                                        <span  class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
+                                            {{ location.size }}
                                         </span>
                                     </td>
                                     <td class="px-8 py-0.5 text-right">
