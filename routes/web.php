@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,13 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     Route::get('locations/{param}', [LocationController::class, 'show'])->name('location.show');
     Route::put('locations/{param}', [LocationController::class, 'update'])->name('location.update');
     Route::delete('locations/{param}', [LocationController::class, 'destroy'])->name('location.destroy');
+
+    // CRUD Item
+    Route::get('items', [ItemController::class, 'index'])->name('item.index');
+    Route::post('items', [ItemController::class, 'store'])->name('item.store');
+    Route::get('items/{param}', [ItemController::class, 'show'])->name('item.show');
+    Route::put('items/{param}', [ItemController::class, 'update'])->name('item.update');
+    Route::delete('items/{param}', [ItemController::class, 'destroy'])->name('item.destroy');
 });
 
 // Group user
