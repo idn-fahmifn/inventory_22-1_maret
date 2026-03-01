@@ -46,7 +46,12 @@ class LocationController extends Controller
 
     public function show($param)
     {
-        $location = Location::where('uuid', $param)->firstOrFail();
+
+
+
+
+        $location = Location::where('uuid', $param)->firstOrFail()->load('user');
+
         $users = User::where('is_admin', false)->get();
         return Inertia::render('Location/Show', [
             'location' => $location,

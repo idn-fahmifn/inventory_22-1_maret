@@ -51,25 +51,25 @@ const deleteItem = () => {
                 <div
                     class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
                     <div class="overflow-x-auto p-6">
-                        <div class="group space-x-2 mb-2">
+                        <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location Name : </p>
                             <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.location_name }} </p>
                         </div>
-                        <div class="group space-x-2 mb-2">
+                        <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location's PIC : </p>
                             <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.user.name }} </p>
                         </div>
-                        <div class="group space-x-2 mb-2">
+                        <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Availability : </p>
-                            <p v-if="location.is_availability == 1" class="text-slate-600 dark:text-slate-300 text-md"> available </p>
-                            <p v-if="location.is_availability == 0" class="text-slate-600 dark:text-slate-300 text-md"> unvailable </p>
+                            <p v-if="location.is_available == 1" class="text-slate-600 dark:text-slate-300 text-md"> available </p>
+                            <p v-if="location.is_available == 0" class="text-slate-600 dark:text-slate-300 text-md"> unvailable </p>
                         </div>
 
-                        <div class="group space-x-2 mb-2">
+                        <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Size : </p>
                             <p class="text-slate-600 dark:text-slate-300 text-md"> {{location.size}} </p>
                         </div>
-                        <div class="group space-x-2 mb-2">
+                        <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Description : </p>
                             <p class="text-slate-600 dark:text-slate-300 text-md"> {{location.description}} </p>
                         </div>

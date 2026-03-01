@@ -19,6 +19,6 @@ class Location extends Model
     // one many dengan user
     public function user()
     {
-        return $this->hasMany(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
