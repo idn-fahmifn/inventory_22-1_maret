@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -33,5 +34,19 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User has been created');
     }
 
-
+    public function show($param)
+    {
+        $user = User::findOrFail($param);
+        $location = Location::where('user_id', $param)->get();
+        return Inertia::render('User/Show', [
+            'user' => $user,
+            'location' => $location,
+        ]);
+    }
+    public function destroy($param)
+    {
+        $user = User::findOrFail($param);
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User has been deleted');
+    }
 }

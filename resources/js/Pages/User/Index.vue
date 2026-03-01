@@ -78,18 +78,18 @@ const submit = () => {
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
                                 <tr v-for="user in users" :key="user.id"
                                     class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
-                                    <td class="px-8 py-6">
+                                    <td class="px-8 py-0.5">
                                         <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ user.name }}
                                         </div>
                                         <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
                                             {{ user.email }}</div>
                                     </td>
-                                    <td class="px-8 py-6">
+                                    <td class="px-8 py-0.5">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
                                             {{ user.location_count }} Location
                                         </span>
                                     </td>
-                                    <td class="px-8 py-6 text-right">
+                                    <td class="px-8 py-0.5 text-right">
                                         <a href="#"
                                             class="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mx-2">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

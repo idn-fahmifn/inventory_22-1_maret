@@ -24,6 +24,8 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     // CRUD untuk petugas : 
     Route::get('users', [UserController::class, 'index'])->name('user.index');
     Route::post('users', [UserController::class, 'store'])->name('user.store');
+    Route::get('users/{param}', [UserController::class, 'show'])->name('user.show');
+    Route::delete('users/{param}', [UserController::class, 'destroy'])->name('user.destroy');
 
 
 });
