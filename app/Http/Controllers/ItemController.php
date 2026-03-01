@@ -120,8 +120,8 @@ class ItemController extends Controller
 
     public function destroy($param)
     {
-        $data = Location::where('uuid', $param);
+        $data = Item::where('uuid', $param);
         $data->delete();
-        return redirect()->route('location.index')->with('success', 'Location has been deleted');
+        return redirect()->route('item.index')->with('success', 'Item has been deleted');
     }
 }
