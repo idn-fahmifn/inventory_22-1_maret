@@ -120,7 +120,12 @@ class ItemController extends Controller
 
     public function destroy($param)
     {
-        $data = Item::where('uuid', $param);
+        $data = Item::where('uuid', $param)->firstOrFail();
+        $path_lama = 'public/images/items/' . $data->image;
+
+            if($data->image && Storage::exists($path_lama)){
+                Storage::delete($path_lama);
+            }
         $data->delete();
         return redirect()->route('item.index')->with('success', 'Item has been deleted');
     }
