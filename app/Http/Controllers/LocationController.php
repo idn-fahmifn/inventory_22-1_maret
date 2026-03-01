@@ -59,7 +59,26 @@ class LocationController extends Controller
 
     public function update(Request $request, $param)
     {
-        return $request;
+        $data = Location::where('uuid', $param)->firstOrFail();
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:30'],
+            'user' => ['required'],
+            'size' => ['required', 'in:small,medium,large'],
+            'availability' => ['required', 'in:1,0'],
+            'description' => ['required'],
+        ]);
+
+        $simpan = [
+            'uuid' => Str::orderedUuid(),
+            'user_id' => $request->input('user'),
+            'location_name' => $request->input('name'),
+            'size' => $request->input('size'),
+            'is_available' => $request->input('availability'),
+            'description' => $request->input('description'),
+        ];
+
+        $data->update($simpan);
+        return redirect()->route('location.show', $data->uuid)->with('success', 'Location Has been updated');
     }
 
 }
