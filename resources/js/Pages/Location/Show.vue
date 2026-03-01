@@ -8,8 +8,8 @@ import TextInput from '@/Components/TextInput.vue';
 
 
 const props = defineProps({
-    user: Object,
-    locations: Array
+    location: Object,
+    users: Array
 });
 
 // mengatur modal open/close
@@ -19,7 +19,7 @@ const deleteItem = () => {
     if(confirm('Are you sure...?')){
         
         // Mengirim method untuk delete data
-        router.delete(route('user.destroy', props.user.id));
+        router.delete(route('location.destroy', props.location.id));
     }
 }
 
@@ -27,13 +27,13 @@ const deleteItem = () => {
 
 <template>
 
-    <Head title="Detail user" + user.name />
+    <Head title="Detail location" + location.name />
 
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Detail User
+                    Detail Location
                 </h2>
 
                 <button @click="deleteItem"
@@ -52,13 +52,29 @@ const deleteItem = () => {
                     class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
                     <div class="overflow-x-auto p-6">
                         <div class="group space-x-2 mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">User Fullname : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ user.name }} </p>
+                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location Name : </p>
+                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.location_name }} </p>
                         </div>
                         <div class="group space-x-2 mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">User Email : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ user.email }} </p>
+                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location's PIC : </p>
+                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.user.name }} </p>
                         </div>
+                        <div class="group space-x-2 mb-2">
+                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Availability : </p>
+                            <p v-if="location.is_availability == 1" class="text-slate-600 dark:text-slate-300 text-md"> available </p>
+                            <p v-if="location.is_availability == 0" class="text-slate-600 dark:text-slate-300 text-md"> unvailable </p>
+                        </div>
+
+                        <div class="group space-x-2 mb-2">
+                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Size : </p>
+                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{location.size}} </p>
+                        </div>
+                        <div class="group space-x-2 mb-2">
+                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Description : </p>
+                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{location.description}} </p>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -78,7 +94,7 @@ const deleteItem = () => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                                <tr v-for="location in locations" :key="location.id"
+                                <tr
                                     class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-0.5">
                                         <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ location }}

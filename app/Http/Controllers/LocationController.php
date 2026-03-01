@@ -41,7 +41,17 @@ class LocationController extends Controller
 
         Location::create($simpan);
         return redirect()->route('location.index')->with('success', 'Location Has been created');
-
-
     }
+
+
+    public function show($param)
+    {
+        $location = Location::where('uuid', $param)->firstOrFail();
+        $users = User::where('is_admin', false)->get();
+        return Inertia::render('Location/Show', [
+            'location' => $location,
+            'users' => $users,
+        ]);
+    }
+
 }
