@@ -17,7 +17,7 @@ const props = defineProps({
 const deleteItem = () => {
     // konfirmasi delete
     if(confirm('Are you sure...?')){
-
+        
         // Mengirim method untuk delete data
         router.delete(route('user.destroy', props.user.id));
     }
@@ -101,9 +101,9 @@ const deleteItem = () => {
                                         </a>
                                     </td>
                                 </tr>
-                                <tr v-if="locations == null">
-                                    <td colspan="3" class="px-8 py-3 text-center text-slate-600 dark:text-slate-400">Location not found</td>
-                                </tr>
+                                <!-- <tr v-if="locations.length === 0">
+                                    <td colspan="3" class="px-8 py-3 text-center">Location not found</td>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
