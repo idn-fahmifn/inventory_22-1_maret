@@ -16,13 +16,6 @@ const props = defineProps({
 
 const showModal = ref(false);
 
-// fungsi untuk membuka modal
-const openModal = () => {
-    form.reset();
-    form.clearErrors();
-    showModal.value = true;
-}
-
 const form = useForm({
     name: props.location.location_name,
     user: props.location.user.id,
@@ -30,6 +23,18 @@ const form = useForm({
     availability: props.location.is_available,
     description: props.location.description,
 })
+
+// fungsi untuk membuka modal
+const openModal = () => {
+    form.location_name = props.location.location_name;
+    form.size = props.location.size;
+    form.availability = props.location.is_available;
+    form.description = props.location.description;
+    form.user = props.location.user.id;
+    form.clearErrors();
+    showModal.value = true;
+}
+
 
 const closeModal = () => {
     showModal.value = false;
