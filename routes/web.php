@@ -32,11 +32,9 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     Route::get('locations', [LocationController::class, 'index'])->name('location.index');
     Route::post('locations', [LocationController::class, 'store'])->name('location.store');
     Route::get('locations/{param}', [LocationController::class, 'show'])->name('location.show');
+    Route::put('locations/{param}', [LocationController::class, 'update'])->name('location.update');
     Route::delete('locations/{param}', [LocationController::class, 'destroy'])->name('location.destroy');
-
-
 });
-
 
 // Group user
 Route::prefix('user')->middleware(['auth', 'verified'])->group(function () {

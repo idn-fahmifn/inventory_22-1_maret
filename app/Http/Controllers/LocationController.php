@@ -57,4 +57,9 @@ class LocationController extends Controller
         ]);
     }
 
+    public function update(Request $request, $param)
+    {
+        return $request;
+    }
+
 }
