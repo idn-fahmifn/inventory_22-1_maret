@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -26,6 +27,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     Route::post('users', [UserController::class, 'store'])->name('user.store');
     Route::get('users/{param}', [UserController::class, 'show'])->name('user.show');
     Route::delete('users/{param}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    // CRUD untuk lokasi
+    Route::get('locations', [LocationController::class, 'index'])->name('location.index');
+    Route::post('locations', [LocationController::class, 'store'])->name('location.store');
+    Route::get('locations/{param}', [LocationController::class, 'show'])->name('location.show');
+    Route::delete('locations/{param}', [LocationController::class, 'destroy'])->name('location.destroy');
 
 
 });
