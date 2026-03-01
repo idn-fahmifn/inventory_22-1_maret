@@ -9,7 +9,8 @@ import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
     location: Object,
-    users: Array
+    users: Array,
+    items: Array,
 });
 
 // mengatur modal open/close
@@ -88,23 +89,23 @@ const deleteItem = () => {
                             <thead>
                                 <tr
                                     class="text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black bg-slate-50/50 dark:bg-slate-800/50">
-                                    <th class="px-8 py-5">Location Name</th>
-                                    <th class="px-8 py-5">Size</th>
+                                    <th class="px-8 py-5">Item Name</th>
+                                    <th class="px-8 py-5">Stok</th>
                                     <th class="px-8 py-5 text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                                <tr
+                                <tr v-for="item in items" :key="item.id"
                                     class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-0.5">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ location }}
+                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{ item.item_name }}
                                         </div>
                                         <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{ location }}</div>
+                                            {{ item.category }}</div>
                                     </td>
                                     <td class="px-8 py-0.5">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ location }} Location
+                                            {{ location.stock }}
                                         </span>
                                     </td>
                                     <td class="px-8 py-0.5 text-right">
@@ -117,9 +118,9 @@ const deleteItem = () => {
                                         </a>
                                     </td>
                                 </tr>
-                                <!-- <tr v-if="locations.length === 0">
-                                    <td colspan="3" class="px-8 py-3 text-center">Location not found</td>
-                                </tr> -->
+                                <tr v-if="items.length === 0">
+                                    <td colspan="3" class="px-8 py-3 text-center text-slate-600 dark:text-slate-400">Item not found</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

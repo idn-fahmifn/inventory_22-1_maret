@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Location;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,16 +47,13 @@ class LocationController extends Controller
 
     public function show($param)
     {
-
-
-
-
         $location = Location::where('uuid', $param)->firstOrFail()->load('user');
-
         $users = User::where('is_admin', false)->get();
+        $items = Item::where('location_id', $location->id)->get();
         return Inertia::render('Location/Show', [
             'location' => $location,
             'users' => $users,
+            'items' => $items,
         ]);
     }
 
