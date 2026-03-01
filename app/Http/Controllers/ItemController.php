@@ -63,13 +63,11 @@ class ItemController extends Controller
 
     public function show($param)
     {
-        $location = Location::where('uuid', $param)->firstOrFail()->load('user');
-        $users = User::where('is_admin', false)->get();
-        $items = Item::where('location_id', $location->id)->get();
-        return Inertia::render('Location/Show', [
-            'location' => $location,
-            'users' => $users,
-            'items' => $items,
+        $item = Item::where('uuid', $param)->firstOrFail()->load('location');
+        $locations = Location::all(); 
+        return Inertia::render('Item/Show', [
+            'locations' => $locations,
+            'item' => $item,
         ]);
     }
 

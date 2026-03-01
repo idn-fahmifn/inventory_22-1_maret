@@ -9,30 +9,34 @@ import TextAreaInput from '@/Components/TextAreaInput.vue';
 
 
 const props = defineProps({
-    location: Object,
-    users: Array,
-    items: Array,
+    locations: Array,
+    item: Object,
 });
 
 const showModal = ref(false);
 
 const form = useForm({
-    name: props.location.location_name,
-    user: props.location.user_id,
-    size: props.location.size,
-    availability: props.location.is_available,
-    description: props.location.description,
+    name: props.item.item_name,
+    location: props.item.location_id,
+    category: props.item.category,
+    condition: props.item.condition,
+    stock: props.item.stock,
+    image: null,
+    description: props.item.description,
+    _method: 'put'
 })
 
 // fungsi untuk membuka modal
 const openModal = () => {
-    form.location_name = props.location.location_name;
-    form.size = props.location.size;
-    form.availability = props.location.is_available;
-    form.description = props.location.description;
-    form.user = props.location.user_id;
-    
-    form.clearErrors();
+    form.name = props.item.item_name;
+    form.location = props.item.location_id,
+        form.category = props.item.category,
+        form.condition = props.item.condition,
+        form.stock = props.item.stock,
+        form.image = null,
+        form.description = props.item.description,
+
+        form.clearErrors();
     showModal.value = true;
 }
 
@@ -43,7 +47,7 @@ const closeModal = () => {
 }
 
 const submit = () => {
-    form.put(route('location.update', props.location.uuid), {
+    form.put(route('item.update', props.item.uuid), {
         preserveScroll: true,
         onSuccess: () => closeModal()
     });
@@ -64,13 +68,13 @@ const deleteItem = () => {
 
 <template>
 
-    <Head title="Detail location" + location.name />
+    <Head title="Detail item" + item.item_name />
 
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Detail Location
+                    Detail Item
                 </h2>
 
                 <div class="">
@@ -96,87 +100,59 @@ const deleteItem = () => {
                 <div
                     class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
                     <div class="overflow-x-auto p-6">
-                        <div class="group mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location Name : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.location_name }} </p>
-                        </div>
-                        <div class="group mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location's PIC : </p>
-                            <p v-if="location.user == null" class="text-red-800 dark:text-red-600 text-md"> The location
-                                have
-                                not user </p>
-                            <p v-else class="text-slate-600 dark:text-slate-300 text-md"> {{ location.user.name }} </p>
-                        </div>
-                        <div class="group mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Availability : </p>
-                            <p v-if="location.is_available == 1" class="text-slate-600 dark:text-slate-300 text-md">
-                                available
-                            </p>
-                            <p v-if="location.is_available == 0" class="text-slate-600 dark:text-slate-300 text-md">
-                                unvailable
-                            </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="">
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Item Name : </p>
+                                    <p class="text-slate-600 dark:text-slate-300 text-md"> {{ item.item_name }} </p>
+                                </div>
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location's PIC :
+                                    </p>
+                                    <p v-if="item.location == null" class="text-red-800 dark:text-red-600 text-md"> The
+                                        Item
+                                        have
+                                        not location </p>
+                                    <p v-else class="text-slate-600 dark:text-slate-300 text-md"> {{
+                                        item.location.location_name
+                                        }} </p>
+                                </div>
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Category : </p>
+                                    <p class="text-slate-600 dark:text-slate-300 text-md">
+                                        {{ item.category }}
+                                    </p>
+                                </div>
+
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Condition : </p>
+                                    <p v-if="item.condition === 'good'"
+                                        class="text-green-800 dark:text-green-600 text-md"> Good
+                                    </p>
+                                    <p v-if="item.condition === 'broke'" class="text-red-800 dark:text-red-600 text-md">
+                                        Good
+                                    </p>
+                                    <p v-if="item.condition === 'maintenance'"
+                                        class="text-yellow-800 dark:text-yellow-600 text-md"> Good </p>
+                                </div>
+
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Stock : </p>
+                                    <p class="text-slate-600 dark:text-slate-300 text-md"> {{ item.stock }} </p>
+                                </div>
+
+                                <div class="group mb-2">
+                                    <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Description : </p>
+                                    <p class="text-slate-600 dark:text-slate-300 text-md"> {{ item.description }} </p>
+                                </div>
+                            </div>
+                            <div class="">
+                                <img v-if="item.image" :src="'/storage/images/items/' + item.image" alt="Image Item" class="img-fluid w-[320px]">
+                            </div>
                         </div>
 
-                        <div class="group mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Size : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.size }} </p>
-                        </div>
-                        <div class="group mb-2">
-                            <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Description : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.description }} </p>
-                        </div>
 
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-                <div
-                    class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr
-                                    class="text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black bg-slate-50/50 dark:bg-slate-800/50">
-                                    <th class="px-8 py-5">Item Name</th>
-                                    <th class="px-8 py-5">Stok</th>
-                                    <th class="px-8 py-5 text-center">#</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                                <tr v-for="item in items" :key="item.id"
-                                    class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
-                                    <td class="px-8 py-0.5">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{{
-                                            item.item_name }}
-                                        </div>
-                                        <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{ item.category }}</div>
-                                    </td>
-                                    <td class="px-8 py-0.5">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ location.stock }}
-                                        </span>
-                                    </td>
-                                    <td class="px-8 py-0.5 text-right">
-                                        <a href="#"
-                                            class="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mx-2">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr v-if="items.length === 0">
-                                    <td colspan="3" class="px-8 py-3 text-center text-slate-600 dark:text-slate-400">
-                                        Item not
-                                        found</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
