@@ -81,4 +81,11 @@ class LocationController extends Controller
         return redirect()->route('location.show', $data->uuid)->with('success', 'Location Has been updated');
     }
 
+    public function destroy($param)
+    {
+        $data = Location::where('uuid', $param);
+        $data->delete();
+        return redirect()->route('location.index')->with('success', 'Location has been deleted');
+    }
+
 }

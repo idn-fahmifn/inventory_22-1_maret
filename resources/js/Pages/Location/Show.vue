@@ -55,7 +55,7 @@ const deleteItem = () => {
     if (confirm('Are you sure...?')) {
 
         // Mengirim method untuk delete data
-        router.delete(route('location.destroy', props.location.id));
+        router.delete(route('location.destroy', props.location.uuid));
     }
 }
 
