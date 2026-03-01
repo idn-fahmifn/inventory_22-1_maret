@@ -25,18 +25,20 @@ class ItemController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:30'],
-            'user' => ['required'],
-            'size' => ['required', 'in:small,medium,large'],
-            'availability' => ['required', 'in:1,0'],
+            'location' => ['required', 'exists:locations,id'],
+            'category' => ['required', 'in:electronic,tools,etc,transportation'],
+            'condition' => ['required', 'in:good,broke,maintenance'],
+            'stock' => ['required', 'min:0', 'max:999'],
+            'image' => ['required', 'mimes:png,jpg,jpeg,svg,webp'],
             'description' => ['required'],
         ]);
 
         $simpan = [
             'uuid' => Str::orderedUuid(),
-            'user_id' => $request->input('user'),
-            'location_name' => $request->input('name'),
-            'size' => $request->input('size'),
+            'location_id' => $request->input('location'),
+            'item_name' => $request->input('name'),
             'condition' => $request->input('condition'),
+            'category' => $request->input('category'),
             'stock' => $request->input('stock'),
             'description' => $request->input('description'),
         ];
