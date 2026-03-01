@@ -82,7 +82,7 @@ class ItemController extends Controller
             'category' => ['required', 'in:electronic,tools,etc,transportation'],
             'condition' => ['required', 'in:good,broke,maintenance'],
             'stock' => ['required', 'min:0', 'max:999'],
-            'image' => ['required', 'mimes:png,jpg,jpeg,svg,webp'],
+            // 'image' => ['mimes:png,jpg,jpeg,svg,webp', 'max:10240'],
             'description' => ['required'],
         ]);
 
