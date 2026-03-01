@@ -18,7 +18,7 @@ const showModal = ref(false);
 
 const form = useForm({
     name: props.location.location_name,
-    user: props.location.user.id,
+    user: props.location.user,
     size: props.location.size,
     availability: props.location.is_available,
     description: props.location.description,
@@ -101,7 +101,10 @@ const deleteItem = () => {
                         </div>
                         <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Location's PIC : </p>
-                            <p class="text-slate-600 dark:text-slate-300 text-md"> {{ location.user.name }} </p>
+                            <p v-if="location.user == null" class="text-red-800 dark:text-red-600 text-md"> The location
+                                have
+                                not user </p>
+                            <p v-else class="text-slate-600 dark:text-slate-300 text-md"> {{ location.user.name }} </p>
                         </div>
                         <div class="group mb-2">
                             <p class="text-slate-600 dark:text-slate-300 font-bold text-md">Availability : </p>
